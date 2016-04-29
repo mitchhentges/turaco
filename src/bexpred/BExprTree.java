@@ -112,7 +112,7 @@ public class BExprTree {
         if (!isVar) {
           inVar = false;
           for (int s = 0; s < boolVars.size(); s++) {
-            if (aVar.compareTo(boolVars.get(s)) == 0)
+            if (aVar.compareTo((String) boolVars.get(s)) == 0)
               varExists = true;
           }
 

@@ -88,7 +88,7 @@ public class BExpredMain extends JFrame {
     this.setResizable(false);
     this.setSize(new Dimension(392, 385));
     this.setState(Frame.NORMAL);
-    this.setTitle("BExpred");
+    this.setTitle("Turaco");
     ExprField.setSelectionStart(19);
     ExprField.setText("Enter an expression");
     ExprField.setBounds(new Rectangle(7, 6, 378, 19));

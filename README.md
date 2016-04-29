@@ -1,6 +1,7 @@
 # Turaco
 
 Lightweight boolean expression reducer, originally called [BExpred](https://sourceforge.net/projects/bexpred/).
+Compatible with Java, all the way back to 1.3.
 
 ![](screenshot.png)
 
@@ -12,7 +13,7 @@ Modified by: Mitchell Hentges mitchhentges@protonmail.com
 1) To run it:
 	a) Unzip / untar the downloaded file
 	b) In a console / command prompt, go to the "jar" directory
-	c) From there: java -jar BExpred.jar
+	c) From there: java -jar turaco.jar
 	NOTE: You'll need to have the java runtime in your PATH, for windows
 	users, it's somewhere in the System icon from the control panel (May be
 	called "Environment Variables"). For linux users running bash, it's
@@ -52,7 +53,7 @@ Modified by: Mitchell Hentges mitchhentges@protonmail.com
 	variables you want as "1" and finally clicking the "Evaluate" button.
 
 5) Other tools:
-	There are other handy tools provided with BExpred:
+	There are other handy tools provided with Turaco:
 	a) Truth table:
 		Shows the truth table corresponding to the expression currently
 		typed in the expression field.
@@ -72,6 +73,11 @@ is displayed.
 
 A minor code cleanup and commenting session is due, I'll try to make the time
 for it soon.
+
+## Development
+
+1. Initialize your IDE in the `turaco` directory
+2. Run the `main()` method in `BExpred.java` to launch `Turaco`
 
 ## License
 
