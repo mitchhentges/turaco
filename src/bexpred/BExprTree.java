@@ -30,7 +30,6 @@ import java.util.Hashtable;
 
 public class BExprTree {
   private String expression; // The expression representing the expression tree
-  public String orig_expression; // Contains the original expression as entered by the user
   private int var_count; // The amount of unique variables
   private ArrayList vars; // The list of variables, strings.
   private boolean case_sensitive = false; // Is the expression case sensitive?
@@ -56,13 +55,10 @@ public class BExprTree {
   }
 
   public void setExpression(String expression) throws BExprPreParseException {
-    //DEBUG System.out.println(expression);
     BExprPreParser preParser;
-    this.orig_expression = expression;
     this.expression = expression.trim();
 
     try {
-      //DEBUG System.out.println(this.expression);
       preParser = new BExprPreParser(this.expression);
       this.expression = preParser.getExpression();
       this.var_count = this.updateVars();

@@ -64,7 +64,6 @@ public class BExprPreParser {
     // put the whole expression between brackets. If there aren't any
     // brackets in the expression, indexOf return -1 and enclosed is
     // initialised to false.
-    //boolean enclosed = this.expression.indexOf("(") == 0 || (!BExprParser.hasOp(this.expression) && this.expression.indexOf("(") == -1);
     boolean enclosed = this.expression.indexOf("(") == 0;
     boolean inverted = false; // Is the first char a NOT
 
@@ -137,7 +136,7 @@ public class BExprPreParser {
 
   public static String getGroupedExpr(String expression) {
     String left = "", middle = "", right = "";
-    String grouped = "";
+    String grouped;
     char aChar, bChar;
     boolean goRight = false;
     int nOp, tOp;

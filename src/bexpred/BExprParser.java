@@ -1,6 +1,4 @@
 package bexpred;
-import java.util.Stack;
-
 /*
  * BExpred - Boolean Expression Reducer
  * Goal: To reduce specified boolean expressions
@@ -27,7 +25,6 @@ import java.util.Stack;
  */
 
 public class BExprParser {
-  private String expression;
 
   public static int nextOp(int startAt, String expression) {
     // Returns the integer value of the next operator in the expression, -1 if a
@@ -50,14 +47,6 @@ public class BExprParser {
     return -1;
   }
 
-  public static int nextOp(String expression) {
-    return nextOp(0, expression);
-  }
-
-  public int nextOp() {
-    return nextOp(0, this.expression);
-  }
-
   public static int getOp(char aChar) {
     if (isOR(aChar))
       return 0;
@@ -66,20 +55,6 @@ public class BExprParser {
     if (isAND(aChar))
       return 2;
     return -1;
-  }
-
-  public static int opCount(String aStr) {
-    int cnt = 0;
-    for (int i = 0; i < aStr.length(); i++) {
-      if (isOp(aStr.charAt(i)))
-        cnt++;
-    }
-
-    return cnt;
-  }
-
-  public int opCount() {
-    return opCount(this.expression);
   }
 
   // The comparators can either take in a char, a string, or nothing:
@@ -91,28 +66,6 @@ public class BExprParser {
     return (isAND(aChar) || isOR(aChar) || isXOR(aChar));
   }
 
-  public static boolean isOp(String aStr) {
-    char aChar;
-    if (aStr.length() > 0) {
-      aChar = aStr.charAt(0);
-      return (isAND(aChar) || isOR(aChar) || isXOR(aChar));
-    }
-    return false;
-  }
-
-  public boolean isOp() {
-    char aChar;
-    if (this.expression.length() > 0) {
-      aChar = this.expression.charAt(0);
-      return (isAND(aChar) || isOR(aChar) || isXOR(aChar));
-    }
-    return false;
-  }
-
-  public static boolean hasOp(char aChar) {
-    return isOp(aChar);
-  }
-
   public static boolean hasOp(String aStr) {
     for (int i = 0; i < aStr.length(); i++) {
       if (isOp(aStr.charAt(i)))
@@ -121,25 +74,9 @@ public class BExprParser {
     return false;
   }
 
-  public boolean hasOp() {
-    return hasOp(this.expression);
-  }
-
   public static boolean isAND(char aChar) {
     if (aChar == '*' || aChar == '&')
       return true;
-    return false;
-  }
-
-  public static boolean isAND(String aStr) {
-    if (aStr.length() > 0)
-      return isAND(aStr.charAt(0));
-    return false;
-  }
-
-  public boolean isAND() {
-    if (this.expression.length() > 0)
-      return this.isAND(this.expression.charAt(0));
     return false;
   }
 
@@ -149,33 +86,9 @@ public class BExprParser {
     return false;
   }
 
-  public static boolean isOR(String aStr) {
-    if (aStr.length() > 0)
-      return isOR(aStr.charAt(0));
-    return false;
-  }
-
-  public boolean isOR() {
-    if (this.expression.length() > 0)
-      return this.isOR(this.expression.charAt(0));
-    return false;
-  }
-
   public static boolean isXOR(char aChar) {
     if (aChar == '^')
       return true;
-    return false;
-  }
-
-  public static boolean isXOR(String aStr) {
-    if (aStr.length() > 0)
-      return isXOR(aStr.charAt(0));
-    return false;
-  }
-
-  public boolean isXOR() {
-    if (this.expression.length() > 0)
-      return this.isXOR(this.expression.charAt(0));
     return false;
   }
 
@@ -183,22 +96,6 @@ public class BExprParser {
     if (aChar == '!' || aChar == '~')
       return true;
     return false;
-  }
-
-  public static boolean isNOT(String aStr) {
-    if (aStr.length() > 0)
-      return isNOT(aStr.charAt(0));
-    return false;
-  }
-
-  public boolean isNOT() {
-    if (this.expression.length() > 0)
-      return this.isNOT(this.expression.charAt(0));
-    return false;
-  }
-
-  public static boolean hasNOT(char aChar) {
-    return isNOT(aChar);
   }
 
   public static boolean hasNOT(String aStr) {
@@ -209,29 +106,9 @@ public class BExprParser {
     return false;
   }
 
-  public boolean hasNOT() {
-    return hasNOT(this.expression);
-  }
-
 
   public static boolean isVarChar(char aChar) {
     return (!isOp(aChar) && !isNOT(aChar) && aChar != ' ' && aChar != '(' && aChar != ')');
-  }
-
-  public static boolean isVarChar(String aStr) {
-    if (aStr.length() > 0) {
-      char aChar = aStr.charAt(0);
-      return (isOp(aChar) && !isNOT(aChar) && aChar != ' ' && aChar != '(' && aChar != ')');
-    }
-    return false;
-  }
-
-  public boolean isVarChar() {
-    if (this.expression.length() > 0) {
-      char aChar = this.expression.charAt(0);
-      return (this.isOp(aChar) && !isNOT(aChar) && aChar != ' ' && aChar != '(' && aChar != ')');
-    }
-    return false;
   }
 
   /**

@@ -200,7 +200,6 @@ public class BExpredMain extends JFrame {
     // Create the expression tree from the expression.
     try {
       this.bexprtree = new BExprTree(this.ExprField.getText());
-      //System.out.println(this.bexprtree.getTruthTable().getExpr(this.bexprtree.getTruthTable().reduceVars(this.bexprtree.getVars())));
     } catch (BExprPreParseException ex) {
       this.bexprtree = null;
       this.exceptionField.setText(ex.getMessage());
