@@ -347,7 +347,6 @@ public class BExpredMain extends JFrame {
 
   void ExprField_textChanged(DocumentEvent e) {
     if (this.showPlaceholder) {
-      this.showPlaceholder = false;
       String notPlaceholder = "";
       try {
         notPlaceholder = e.getDocument().getText(e.getOffset(), e.getLength());
@@ -355,6 +354,7 @@ public class BExpredMain extends JFrame {
       final String replacement = notPlaceholder;
       SwingUtilities.invokeLater(new Runnable() {
         public void run() {
+          BExpredMain.this.showPlaceholder = false;
           BExpredMain.this.ExprField.setText(replacement);
         }
       });
