@@ -3,9 +3,10 @@
 Lightweight boolean expression reducer, originally called [BExpred](https://sourceforge.net/projects/bexpred/).
 Compatible with Java, all the way back to 1.3.
 
-![](screenshot.png)
+![](doc-resources/screenshot.png)
 
-Written by: Benjamin Biron
+Written by: Benjamin Biron bbiron@users.sourceforge.net
+
 Modified by: Mitchell Hentges mitchhentges@protonmail.com
 
 ## Instructions
@@ -78,6 +79,14 @@ for it soon.
 
 1. Initialize your IDE in the `turaco` directory
 2. Run the `main()` method in `BExpred.java` to launch `Turaco`
+
+The files can be jar'd with the `jar.sh` script
+
+## Why is this called Turaco?
+
+Due to the GNU GPL v2, I can't use the name BExpred anymore. [Birbs](http://birdcheese.tumblr.com/)
+are cool, though, and turacos look really neat.
+![](doc-resources/turaco.jpg)
 
 ## License
 
