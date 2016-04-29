@@ -62,6 +62,7 @@ public class BExpredMain extends JFrame {
   JTextField SOPField = new JTextField();
   JPanel jPanel3 = new JPanel();
   JTextField POSField = new JTextField();
+  JTextField exceptionField = new JTextField();
   JScrollPane jScrollPane1 = new JScrollPane();
   JPanel jPanel2 = new JPanel();
   JCheckBox SOPCheck = new JCheckBox();
@@ -104,6 +105,7 @@ public class BExpredMain extends JFrame {
     EvaluateBtn.addActionListener(new BExpredMain_EvaluateBtn_actionAdapter(this));
     valueField.setText("");
     valueField.setBounds(new Rectangle(326, 355, 56, 19));
+    valueField.setEditable(false);
     ttFrame = new TTFrame();
     TTBtn.setBounds(new Rectangle(278, 30, 107, 25));
     TTBtn.setText("Truth Table");
@@ -132,11 +134,16 @@ public class BExpredMain extends JFrame {
     jLabel2.setBounds(new Rectangle(9, 83, 98, 16));
     SOPField.setText("");
     SOPField.setBounds(new Rectangle(111, 62, 274, 19));
+    SOPField.setEditable(false);
     jPanel3.setLayout(null);
     jPanel3.setAlignmentY((float) 0.5);
     jPanel3.setAlignmentX((float) 0.5);
     POSField.setText("");
     POSField.setBounds(new Rectangle(111, 82, 274, 19));
+    POSField.setEditable(false);
+    exceptionField.setText("");
+    exceptionField.setBounds(new Rectangle(9, 355, 223, 19));
+    exceptionField.setEditable(false);
     jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
     jScrollPane1.setBounds(new Rectangle(9, 113, 373, 228));
@@ -159,6 +166,7 @@ public class BExpredMain extends JFrame {
     jPanel1.add(EvaluateBtn, null);
     jPanel1.add(valueField, null);
     jPanel1.add(SOPCheck, null);
+    jPanel1.add(exceptionField, null);
     jScrollPane1.getViewport().add(jPanel2, null);
     jMenuBar1.add(jMenu1);
     jMenuBar1.add(jMenu2);
@@ -195,7 +203,11 @@ public class BExpredMain extends JFrame {
       //System.out.println(this.bexprtree.getTruthTable().getExpr(this.bexprtree.getTruthTable().reduceVars(this.bexprtree.getVars())));
     } catch (BExprPreParseException ex) {
       this.bexprtree = null;
-      // Need a dialog!!
+      this.exceptionField.setText(ex.getMessage());
+      ex.printStackTrace();
+    } catch (StackOverflowError ex) {
+      this.bexprtree = null;
+      this.exceptionField.setText("Stack Overflow: Expression too long");
       ex.printStackTrace();
     }
 
@@ -249,6 +261,10 @@ public class BExpredMain extends JFrame {
   }
 
   void goReduce() {
+    if (this.bexprtree == null) {
+      return;
+    }
+
     if (this.SOPCheck.isSelected())
       this.SOPField.setText(this.bexprtree.getTruthTable().getSOP(this.bexprtree.getVars()));
     else
