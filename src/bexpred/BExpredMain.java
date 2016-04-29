@@ -337,6 +337,8 @@ public class BExpredMain extends JFrame {
     if (e.getKeyCode() == 10) {
       this.refreshTree();
       this.goReduce();
+    } else if (!e.isAltDown() && !e.isControlDown()) {
+      this.needs_refresh = true;
     }
   }
 
