@@ -1,0 +1,40 @@
+** Version 0.8 - 2003/06/07
+- Finally got around to fixing the little annoying parsing bugs for expressions
+  such as the following:
+	!A
+	!!A
+	!(!A)
+	(((A)))
+	(A + B) + (C + D) <Note the extra spaces>
+
+  Thanks to Hanh-Missi for pointing them out.
+
+** Version 0.7 - 2003/04/19
+- Minor bugfixes in the reduction. Thanks to Jan for pointing them out.
+
+** Version 0.6 - 2003/03/16
+- Now reduces!
+- Reduced output in "sum of products" and "product of sums" form
+- Better truth table
+
+** Version 0.5 - 2003/03/06
+- Added a menu bar
+- Now includes an expression comparator!
+- Minor bug fixes
+
+** Version 0.4 - 2003/02/18
+- Support for NOTs, use ! or ~
+- Fixed various bugs relating to operator precedance and brackets
+- Added primitive truth table (A better one will come)
+- Replaced input textfields with checkboxes
+- Added a scrollpane for the checkboxes
+- Expression tree will auto-refresh when the expression changed and focus is
+  lost in the expression input field
+- You can now press enter in the expression input field to refresh the tree
+
+** Version 0.3 - 2003/01/29
+- Completely rewritten expression parser
+- Support for XORs, use ^
+
+** Version 0.2 - 2003/01/26
+- Initial version
