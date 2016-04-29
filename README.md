@@ -3,11 +3,10 @@
 Lightweight boolean expression reducer, originally called [BExpred](https://sourceforge.net/projects/bexpred/).
 Compatible with Java, all the way back to 1.3.
 
+* Written by: Benjamin Biron bbiron@users.sourceforge.net
+* Modified by: Mitchell Hentges mitchhentges@protonmail.com
+
 ![](doc-resources/screenshot.png)
-
-Written by: Benjamin Biron bbiron@users.sourceforge.net
-
-Modified by: Mitchell Hentges mitchhentges@protonmail.com
 
 ## Instructions
 
