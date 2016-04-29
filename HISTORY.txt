@@ -1,3 +1,9 @@
+** Version 1.0 - 2016/04/29
+- Clear "Enter an expression" when a character is entered
+- Show the current error in a single-line textbox on the bottom of the panel
+- Fixed a case where StackOverflowError would be thrown on a short string, such as: `(B)*((B)*(B))*((B)*(B))`
+    This is because BExprParser.nextOp() wasn't considering bracket depth
+
 ** Version 0.8 - 2003/06/07
 - Finally got around to fixing the little annoying parsing bugs for expressions
   such as the following:
