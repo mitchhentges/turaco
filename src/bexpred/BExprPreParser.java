@@ -131,7 +131,7 @@ public class BExprPreParser {
   }
 
   private void group() {
-    this.expression = this.getGroupedExpr(this.expression);
+    this.expression = getGroupedExpr(this.expression);
   }
 
   public static String getGroupedExpr(String expression) {

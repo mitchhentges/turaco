@@ -30,6 +30,7 @@ public class BExprParser {
     // Returns the integer value of the next operator in the expression, -1 if a
     // closing bracket is found or if we get to the end of the expression
     char aChar;
+    int balance = 0; // The number of nesting-levels deep we are into brackets ()
     for (int i = startAt; i < expression.length(); i++) {
       aChar = expression.charAt(i);
       if (isOR(aChar))
@@ -39,7 +40,19 @@ public class BExprParser {
       if (isAND(aChar))
         return 2;
       if (aChar == '(') {
-        i = expression.indexOf(')', i);
+        balance++;
+        do {
+          int start = expression.indexOf(')', i);
+          int end = expression.indexOf('(', i);
+
+          if (start < end) {
+            i = start;
+            balance++;
+          } else {
+            i = end;
+            balance--;
+          }
+        } while (balance > 0);
       }
       if (aChar == ')')
         return -1;
