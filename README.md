@@ -86,6 +86,7 @@ The files can be jar'd with the `jar.sh` script
 
 Due to the GNU GPL v2, I can't use the name BExpred anymore. [Birbs](http://birdcheese.tumblr.com/)
 are cool, though, and turacos look really neat.
+
 ![](doc-resources/turaco.jpg)
 
 ## License
