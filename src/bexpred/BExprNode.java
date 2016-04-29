@@ -129,7 +129,7 @@ class BExprNode {
   }
 
   private String parseVar() {
-    int balance = 0, i;
+    int balance, i;
     char aChar;
     String aVar = "";
 

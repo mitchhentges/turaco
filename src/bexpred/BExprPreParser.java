@@ -139,19 +139,18 @@ public class BExprPreParser {
     String grouped;
     char aChar, bChar;
     boolean goRight = false;
-    int nOp, tOp;
+    int nextOperator, thisOperator;
     int l_cnt = 0, r_cnt = 1; // r_cnt must start at one to catch the last var after the last op.
     int upto, balance;
 
     for (int i = 0; i < expression.length(); i++) {
       aChar = expression.charAt(i);
       if (BExprParser.isOp(aChar)) {
-        tOp = BExprParser.getOp(aChar); // tOp stands for This Operator
+        thisOperator = BExprParser.getOp(aChar);
         if (!goRight) {
           l_cnt++;
-          nOp = BExprParser.nextOp(i+1, expression);
-          //if (nOp == 2 || nOp == tOp || nOp == -1) {
-          if ((nOp == 2 && tOp != 2) || nOp == -1) {
+          nextOperator = BExprParser.nextOp(i+1, expression);
+          if ((nextOperator == 2 && thisOperator != 2) || nextOperator == -1) {
             middle += aChar;
             goRight = true;
           } else {
