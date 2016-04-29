@@ -4,12 +4,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableCellEditor;
-
 import java.util.Hashtable;
 import java.util.ArrayList;
 import javax.swing.event.*;
+import javax.swing.text.BadLocationException;
 
 /*
  * BExpred - Boolean Expression Reducer
@@ -51,6 +49,7 @@ public class BExpredMain extends JFrame {
 
 
   boolean needs_refresh = false;
+  boolean showPlaceholder = true;
   JMenuBar jMenuBar1 = new JMenuBar();
   JMenu jMenu1 = new JMenu();
   JMenuItem jMenuItem1 = new JMenuItem();
@@ -95,6 +94,7 @@ public class BExpredMain extends JFrame {
     ExprField.addFocusListener(new BExpredMain_ExprField_focusAdapter(this));
     ExprField.addKeyListener(new BExpredMain_ExprField_keyAdapter(this));
     ExprField.addMouseListener(new BExpredMain_ExprField_mouseAdapter(this));
+    ExprField.getDocument().addDocumentListener(new BExpredMain_ExprField_documentListener(this));
     jPanel1.setAlignmentX((float) 0.5);
     jPanel1.setAlignmentY((float) 0.5);
     jPanel1.setOpaque(true);
@@ -301,8 +301,9 @@ public class BExpredMain extends JFrame {
 
   void ExprField_mouseClicked(MouseEvent e) {
     // This just clears the ExprField when it's clicked and contains "Enter an expression"
-    if (this.ExprField.getText().compareTo("Enter an expression") == 0) {
+    if (this.showPlaceholder) {
       this.ExprField.setText("");
+      this.showPlaceholder = false;
     }
   }
 
@@ -321,14 +322,28 @@ public class BExpredMain extends JFrame {
     if (e.getKeyCode() == 10) {
       this.refreshTree();
       this.goReduce();
-    } else if (!e.isAltDown() && !e.isControlDown()) {
-      this.needs_refresh = true;
     }
   }
 
   void ExprField_focusLost(FocusEvent e) {
     if (this.needs_refresh)
       this.refreshTree();
+  }
+
+  void ExprField_textChanged(DocumentEvent e) {
+    if (this.showPlaceholder) {
+      this.showPlaceholder = false;
+      String notPlaceholder = "";
+      try {
+        notPlaceholder = e.getDocument().getText(e.getOffset(), e.getLength());
+      } catch (BadLocationException ignored) {}
+      final String replacement = notPlaceholder;
+      SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+          BExpredMain.this.ExprField.setText(replacement);
+        }
+      });
+    }
   }
 
   void jMenuItem1_mouseReleased(MouseEvent e) {
@@ -424,6 +439,25 @@ class BExpredMain_ExprField_focusAdapter extends java.awt.event.FocusAdapter {
   }
   public void focusLost(FocusEvent e) {
     adaptee.ExprField_focusLost(e);
+  }
+}
+
+class BExpredMain_ExprField_documentListener implements DocumentListener {
+  BExpredMain adaptee;
+
+  public BExpredMain_ExprField_documentListener(BExpredMain adaptee) {
+    this.adaptee = adaptee;
+  }
+
+  public void insertUpdate(DocumentEvent e) {
+    adaptee.ExprField_textChanged(e);
+  }
+
+  public void removeUpdate(DocumentEvent e) {
+    adaptee.ExprField_textChanged(e);
+  }
+
+  public void changedUpdate(DocumentEvent documentEvent) {
   }
 }
 
