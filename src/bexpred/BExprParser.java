@@ -26,6 +26,16 @@ package bexpred;
 
 public class BExprParser {
 
+  /**
+   * Returns the next operator, where:
+   * 0 => OR
+   * 1 => XOR
+   * 2 => AND
+   * -1 => No operator
+   * @param startAt where to start look for an operator from
+   * @param expression string to search for an operator in
+   * @return the type of the next operator
+     */
   public static int nextOp(int startAt, String expression) {
     // Returns the integer value of the next operator in the expression, -1 if a
     // closing bracket is found or if we get to the end of the expression
@@ -42,15 +52,17 @@ public class BExprParser {
       if (aChar == '(') {
         balance++;
         do {
-          int start = expression.indexOf(')', i);
-          int end = expression.indexOf('(', i);
+          int start = expression.indexOf('(', i + 1);
+          int end = expression.indexOf(')', i + 1);
 
-          if (start < end) {
+          if (start < end && start != -1) {
             i = start;
             balance++;
-          } else {
+          } else if (end != -1) { // ')' is before '(', and isn't nonexistant (-1)
             i = end;
             balance--;
+          } else { // Neither type of bracket was found
+            return -1;
           }
         } while (balance > 0);
       }
