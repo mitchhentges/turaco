@@ -1,4 +1,4 @@
-# Turaco
+# Turaco [![Build Status](https://travis-ci.org/mitchhentges/turaco.svg?branch=master)](https://travis-ci.org/mitchhentges/turaco/)
 
 Lightweight boolean expression reducer, originally called [BExpred](https://sourceforge.net/projects/bexpred/).
 Compatible with Java, all the way back to 1.3.
