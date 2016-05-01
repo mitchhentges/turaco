@@ -1,4 +1,8 @@
-** Version 1.0 - 2016/04/29
+** Version 1.0.1 - 2016/05/01
+- Clear exception text box after successful evaluation
+- Don't evaluate expression on focus-lost if stil showing placeholder text
+
+** Version 1.0.0 - 2016/04/29
 - Clear "Enter an expression" when a character is entered
 - Show the current error in a single-line textbox on the bottom of the panel
 - Fixed a case where StackOverflowError would be thrown on a short string, such as: `(B)*((B)*(B))*((B)*(B))`
