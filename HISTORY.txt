@@ -1,3 +1,6 @@
+** Version 1.0.2 - 2016/05/01
+- Fixed another case where an unnecessary StackOverflow occurred
+
 ** Version 1.0.1 - 2016/05/01
 - Clear exception text box after successful evaluation
 - Don't evaluate expression on focus-lost if stil showing placeholder text
