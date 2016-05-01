@@ -37,7 +37,6 @@ import javax.swing.text.BadLocationException;
 public class BExpredMain extends JFrame {
   JPanel jPanel1 = new JPanel();
   JTextField ExprField = new JTextField();
-  BorderLayout borderLayout1 = new BorderLayout();
   JButton EvaluateBtn = new JButton();
   TTFrame ttFrame;
   BExprCompare cmpFrame;
@@ -200,6 +199,9 @@ public class BExpredMain extends JFrame {
     // Create the expression tree from the expression.
     try {
       this.bexprtree = new BExprTree(this.ExprField.getText());
+
+      // No exception thrown
+      this.exceptionField.setText("Evaluation succeeded");
     } catch (BExprPreParseException ex) {
       this.bexprtree = null;
       this.exceptionField.setText(ex.getMessage());
@@ -343,7 +345,7 @@ public class BExpredMain extends JFrame {
   }
 
   void ExprField_focusLost(FocusEvent e) {
-    if (this.needs_refresh)
+    if (this.needs_refresh && !this.showPlaceholder)
       this.refreshTree();
   }
 
