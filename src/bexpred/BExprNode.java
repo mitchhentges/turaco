@@ -39,7 +39,6 @@ class BExprNode {
     //       For an AND operator, operator = 2
     //       If operator == -1, the node is either undefined, or of type variable
 
-    public String orig_expression;
     private String expression;
     private BExprNode left, right;
     private int node_type = -1;
@@ -47,26 +46,16 @@ class BExprNode {
     private String var_name = "";
     private boolean inverted = false;
 
-    public BExprNode() {
-        this.expression = "";
-        this.orig_expression = "";
-        this.left = null;
-        this.right = null;
-        this.inverted = false;
-    }
-
     public BExprNode(String expression) {
         this.left = null;
         this.right = null;
         this.inverted = false;
         this.expression = expression.trim();
-        this.orig_expression = expression.trim();
-        //if (BExprParser.opCount(this.expression) > 1)
         this.expression = BExprPreParser.getGroupedExpr(this.expression);
         this.parse();
     }
 
-    public static String stripParentheses(String aStr) {
+    private static String stripParentheses(String aStr) {
         // Blindly strips leading and trailing parentheses
         int start = 0, end = aStr.length();
 

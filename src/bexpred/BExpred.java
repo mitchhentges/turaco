@@ -28,19 +28,14 @@ import java.awt.*;
  */
 
 
-public class BExpred {
-    boolean packFrame = true;
+class BExpred {
 
     //Construct the application
-    public BExpred() {
+    private BExpred() {
         BExpredMain frame = new BExpredMain();
         //Validate frames that have preset sizes
         //Pack frames that have useful preferred size info, e.g. from their layout
-        if (packFrame) {
-            frame.pack();
-        } else {
-            frame.validate();
-        }
+        frame.pack();
         //Center the window
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = frame.getSize();

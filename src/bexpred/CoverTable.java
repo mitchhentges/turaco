@@ -29,12 +29,12 @@ import java.util.Hashtable;
 
  */
 
-public class CoverTable {
-    boolean[][] table;
-    ArrayList cols = new ArrayList();
-    ArrayList usedCols = new ArrayList();
-    Hashtable colIndices = new Hashtable(); // Key: Position in truth table, Value: Index in cols
-    QMGroup minTerms;
+class CoverTable {
+    private final boolean[][] table;
+    private final ArrayList cols = new ArrayList();
+    private final ArrayList usedCols = new ArrayList();
+    private final Hashtable colIndices = new Hashtable(); // Key: Position in truth table, Value: Index in cols
+    private final QMGroup minTerms;
 
     CoverTable(QMGroup minTerms) {
         this.minTerms = minTerms;

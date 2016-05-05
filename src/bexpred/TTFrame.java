@@ -29,8 +29,8 @@ import java.awt.*;
 
  */
 
-public class TTFrame extends JFrame {
-    JScrollPane jScrollPane1 = new JScrollPane();
+class TTFrame extends JFrame {
+    final JScrollPane jScrollPane1 = new JScrollPane();
     JTTable jTable1;
 
     public TTFrame() {
@@ -41,7 +41,7 @@ public class TTFrame extends JFrame {
         }
     }
 
-    private void jbInit() throws Exception {
+    private void jbInit() {
         this.setSize(new Dimension(120, 120));
         this.setTitle("Truth Table");
         this.jScrollPane1.setMinimumSize(new Dimension(120, 120));
@@ -96,7 +96,7 @@ class JTTModel extends AbstractTableModel {
         return false;
     }
 
-    public void setValueAt(boolean val, int row, int col) {
+    private void setValueAt(boolean val, int row, int col) {
         if (row < 0 || col < 0 || row >= this.getRowCount() || col >= this.getColumnCount())
             throw new IllegalArgumentException("Invalid row or column index");
 

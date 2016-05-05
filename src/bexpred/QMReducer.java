@@ -29,8 +29,8 @@ import java.util.Arrays;
  */
 
 
-public class QMReducer {
-    private QMGroup[] groups; // The groped rows in the truth table containing same amount of 1's
+class QMReducer {
+    private final QMGroup[] groups; // The groped rows in the truth table containing same amount of 1's
     private boolean isConst = false; // Will be true for expressions such as A*!A or A+!A
     private boolean constVal; // Will contain the constant value
 
@@ -51,7 +51,7 @@ public class QMReducer {
                 if (isConst && prevVal == 0)
                     isConst = false;
                 prevVal = 1;
-                anItem = new QMItem(aTT[i], true);
+                anItem = new QMItem(aTT[i]);
                 this.groups[anItem.getOneCount()].add(anItem);
             } else {
                 if (isConst && prevVal == 1)
@@ -118,14 +118,10 @@ public class QMReducer {
 }
 
 class QMGroup {
-    ArrayList aList = new ArrayList();
+    private ArrayList aList = new ArrayList();
 
     QMGroup() {
 
-    }
-
-    QMGroup(QMGroup aGroup) {
-        this.aList = (ArrayList) aGroup.aList.clone();
     }
 
     public void add(QMItem anItem) {
@@ -159,16 +155,15 @@ class QMGroup {
         return aList != null ? aList.hashCode() : 0;
     }
 
-    public Object clone() {
-        return new QMGroup(this);
+    public Object clone() throws CloneNotSupportedException {
+        QMGroup qmGroup = (QMGroup) super.clone();
+        qmGroup.aList = (ArrayList) this.aList.clone();
+        return qmGroup;
     }
 
     public void reduceWith(QMGroup aGroup, QMGroup reducedGroup) {
         for (int i = 0; i < this.size(); i++) {
             for (int s = 0; s < aGroup.size(); s++) {
-                //if (!this.get(i).isUsed())
-                //  aGroup.get(s).reduceWith(this.get(i));
-                //else if (!aGroup.get(s).isUsed())
                 this.get(i).reduceWith(aGroup.get(s), reducedGroup);
             }
         }
@@ -176,18 +171,15 @@ class QMGroup {
 }
 
 class QMItem {
-    private int[] row; // An entry in row is 0, 1 or -1 if it's a don't care
+    private final int[] row; // An entry in row is 0, 1 or -1 if it's a don't care
     private int oneCount = 0;
     private boolean used = false;
     public ArrayList coveredRows = new ArrayList();
 
-    QMItem(boolean[] aRow, boolean includesOutput) {
+    QMItem(boolean[] aRow) {
         int rowIndex = 0;
 
-        if (includesOutput)
-            this.row = new int[aRow.length - 1];
-        else
-            this.row = new int[aRow.length];
+        this.row = new int[aRow.length - 1];
 
         for (int i = 0; i < this.row.length; i++) {
             if (aRow[i]) {
@@ -202,7 +194,7 @@ class QMItem {
         this.coveredRows.add(new Integer(rowIndex));
     }
 
-    QMItem(QMItem anItem) {
+    private QMItem(QMItem anItem) {
         // Must not restore the "used" var.
         this.coveredRows = (ArrayList) anItem.coveredRows.clone();
         this.row = new int[anItem.row.length];
@@ -221,8 +213,8 @@ class QMItem {
         return this.used;
     }
 
-    public void setUsed(boolean used) {
-        this.used = used;
+    private void setUsed() {
+        this.used = true;
     }
 
     public boolean equals(Object o) {
@@ -235,21 +227,21 @@ class QMItem {
 
     }
 
-    public boolean reduceWith(QMItem anItem, QMGroup reducedGroup) {
+    public void reduceWith(QMItem anItem, QMGroup reducedGroup) {
         int changed = -1;
         for (int i = 0; i < this.row.length; i++) {
             if (this.row[i] < 0 && anItem.row[i] >= 0)
-                return false;
+                return;
 
             if (this.row[i] != anItem.row[i]) {
                 if (changed != -1)
-                    return false;
+                    return;
                 changed = i;
             }
         }
 
         if (changed == -1)
-            return false;
+            return;
 
         QMItem changedItem = new QMItem(anItem);
         changedItem.row[changed] = -1;
@@ -258,9 +250,8 @@ class QMItem {
         this.copyCoveredRows(changedItem); // Copy the covered rows over to the new QMItem
         // anItem.copyCoveredRows(changedItem); NOT Required since we instantiate QMItem from anItem
 
-        anItem.setUsed(true);
-        this.setUsed(true);
-        return true;
+        anItem.setUsed();
+        this.setUsed();
     }
 
     private void copyCoveredRows(QMItem to) {

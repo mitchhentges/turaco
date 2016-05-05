@@ -25,7 +25,7 @@ package bexpred;
 
  */
 
-public class BExprPreParser {
+class BExprPreParser {
     private String expression;
     private boolean inverted = false;
 
@@ -37,7 +37,7 @@ public class BExprPreParser {
         return this.inverted;
     }
 
-    public void setExpression(String expression) throws BExprPreParseException {
+    private void setExpression(String expression) throws BExprPreParseException {
         this.expression = expression;
         this.validate();
         this.group();

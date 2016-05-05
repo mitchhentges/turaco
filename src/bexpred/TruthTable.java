@@ -31,13 +31,11 @@ public class TruthTable {
     private boolean tt[][];
     private int row_count;
     private int col_count;
-    private ArrayList vars;
 
     public TruthTable(BExprTree aTree) {
         int varCount = aTree.getVarCount();
         this.row_count = two_exp(varCount);
         this.col_count = varCount + 1;
-        this.vars = (ArrayList) aTree.getVars().clone();
         this.initializeTT();
 
         boolean bArray[] = new boolean[this.col_count];
@@ -52,11 +50,11 @@ public class TruthTable {
         }
     }
 
-    public boolean[][] getTT() {
+    private boolean[][] getTT() {
         return this.tt;
     }
 
-    public boolean[][] getInvertedTT() {
+    private boolean[][] getInvertedTT() {
         boolean[][] inverted = new boolean[this.row_count][this.col_count];
 
         for (int i = 0; i < inverted.length; i++) {
@@ -67,11 +65,11 @@ public class TruthTable {
         return inverted;
     }
 
-    public void setRow(int row, boolean aRow[]) {
+    private void setRow(int row, boolean aRow[]) {
         System.arraycopy(aRow, 0, this.tt[row], 0, this.col_count);
     }
 
-    public static int two_exp(int exp) {
+    private static int two_exp(int exp) {
         int n = 1;
         for (int i = 1; i <= exp; i++) {
             n <<= 1;
@@ -131,11 +129,7 @@ public class TruthTable {
         return toRet;
     }
 
-    public ArrayList reduceVars() {
-        return this.reduceVars(null);
-    }
-
-    public ArrayList reduceVars(ArrayList varNames) {
+    public void reduceVars() {
         //reduces the truth table by getting rid of redundant variables
         //returns an ArrayList of the vars minus the redundant ones
         int patternLength;
@@ -173,14 +167,11 @@ public class TruthTable {
         int index;
         for (int i = 0; i < toRemove.size(); i++) {
             index = ((Integer) toRemove.get(i)).intValue() - i; // Must subtract i because the cols will be shifting
-            if (varNames != null)
-                varNames.remove(index);
             this.removeCol(index);
         }
-        return varNames;
     }
 
-    public void removeCol(int idx) {
+    private void removeCol(int idx) {
         //removes a column (var) and it's associated inputs
         boolean[][] cleanTT = new boolean[this.row_count / 2][this.col_count - 1];
         int patternLength = this.row_count / (int) Math.pow(2.0, (double) (idx + 1));

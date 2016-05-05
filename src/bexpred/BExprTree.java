@@ -29,7 +29,7 @@ import java.util.Hashtable;
 
  */
 
-public class BExprTree {
+class BExprTree {
     private String expression; // The expression representing the expression tree
     private int var_count; // The amount of unique variables
     private ArrayList vars; // The list of variables, strings.
@@ -44,7 +44,7 @@ public class BExprTree {
         return this.truth_table;
     }
 
-    public void setExpression(String expression) throws BExprPreParseException {
+    private void setExpression(String expression) throws BExprPreParseException {
         BExprPreParser preParser;
         this.expression = expression.trim();
 

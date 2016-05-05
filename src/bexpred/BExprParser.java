@@ -24,7 +24,7 @@ package bexpred;
 
  */
 
-public class BExprParser {
+class BExprParser {
 
     /**
      * Returns the next operator, where:
@@ -100,15 +100,15 @@ public class BExprParser {
         return false;
     }
 
-    public static boolean isAND(char aChar) {
+    private static boolean isAND(char aChar) {
         return aChar == '*' || aChar == '&';
     }
 
-    public static boolean isOR(char aChar) {
+    private static boolean isOR(char aChar) {
         return aChar == '+' || aChar == '|';
     }
 
-    public static boolean isXOR(char aChar) {
+    private static boolean isXOR(char aChar) {
         return aChar == '^';
     }
 

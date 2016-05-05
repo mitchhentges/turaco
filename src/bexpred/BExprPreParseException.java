@@ -26,8 +26,8 @@ package bexpred;
  */
 
 
-public class BExprPreParseException extends Exception {
-    private String details;
+class BExprPreParseException extends Exception {
+    private final String details;
 
     public BExprPreParseException(String details) {
         this.details = details;

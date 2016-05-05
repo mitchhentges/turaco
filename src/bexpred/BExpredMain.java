@@ -34,38 +34,38 @@ import java.util.Hashtable;
 
  */
 
-public class BExpredMain extends JFrame {
-    JPanel jPanel1 = new JPanel();
-    JTextField ExprField = new JTextField();
-    JButton EvaluateBtn = new JButton();
-    TTFrame ttFrame;
-    BExprCompare cmpFrame;
+class BExpredMain extends JFrame {
+    private final JPanel jPanel1 = new JPanel();
+    private final JTextField ExprField = new JTextField();
+    private final JButton EvaluateBtn = new JButton();
+    private TTFrame ttFrame;
+    private BExprCompare cmpFrame;
 
-    BExprTree bexprtree = null;
-    ArrayList var_inputs = new ArrayList();
-    JTextField valueField = new JTextField();
-    JButton TTBtn = new JButton();
+    private BExprTree bexprtree = null;
+    private final ArrayList var_inputs = new ArrayList();
+    private final JTextField valueField = new JTextField();
+    private final JButton TTBtn = new JButton();
 
 
-    boolean needs_refresh = false;
-    boolean showPlaceholder = true;
-    JMenuBar jMenuBar1 = new JMenuBar();
-    JMenu jMenu1 = new JMenu();
-    JMenuItem jMenuItem1 = new JMenuItem();
-    JMenu jMenu2 = new JMenu();
-    JCheckBoxMenuItem jCheckBoxMenuItem1 = new JCheckBoxMenuItem();
-    JCheckBoxMenuItem jCheckBoxMenuItem2 = new JCheckBoxMenuItem();
-    JButton ReduceBtn = new JButton();
-    JLabel jLabel1 = new JLabel();
-    JLabel jLabel2 = new JLabel();
-    JTextField SOPField = new JTextField();
-    JPanel jPanel3 = new JPanel();
-    JTextField POSField = new JTextField();
-    JTextField exceptionField = new JTextField();
-    JScrollPane jScrollPane1 = new JScrollPane();
-    JPanel jPanel2 = new JPanel();
-    JCheckBox SOPCheck = new JCheckBox();
-    JCheckBox POSCheck = new JCheckBox();
+    private boolean needs_refresh = false;
+    private boolean showPlaceholder = true;
+    private final JMenuBar jMenuBar1 = new JMenuBar();
+    private final JMenu jMenu1 = new JMenu();
+    private final JMenuItem jMenuItem1 = new JMenuItem();
+    private final JMenu jMenu2 = new JMenu();
+    private final JCheckBoxMenuItem jCheckBoxMenuItem1 = new JCheckBoxMenuItem();
+    private final JCheckBoxMenuItem jCheckBoxMenuItem2 = new JCheckBoxMenuItem();
+    private final JButton ReduceBtn = new JButton();
+    private final JLabel jLabel1 = new JLabel();
+    private final JLabel jLabel2 = new JLabel();
+    private final JTextField SOPField = new JTextField();
+    private final JPanel jPanel3 = new JPanel();
+    private final JTextField POSField = new JTextField();
+    private final JTextField exceptionField = new JTextField();
+    private final JScrollPane jScrollPane1 = new JScrollPane();
+    private final JPanel jPanel2 = new JPanel();
+    private final JCheckBox SOPCheck = new JCheckBox();
+    private final JCheckBox POSCheck = new JCheckBox();
 
     //Construct the frame
     public BExpredMain() {
@@ -78,7 +78,7 @@ public class BExpredMain extends JFrame {
     }
 
     //Component initialization
-    private void jbInit() throws Exception {
+    private void jbInit() {
         //this.setContentPane(jPanel1);
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setEnabled(true);
@@ -191,7 +191,7 @@ public class BExpredMain extends JFrame {
         }
     }
 
-    void refreshTree() {
+    private void refreshTree() {
         JCheckBox aCheck;
         Dimension dim;
         int col, lastCol, colPos, maxColWidth;
@@ -257,7 +257,7 @@ public class BExpredMain extends JFrame {
         }
     }
 
-    void goReduce() {
+    private void goReduce() {
         if (this.bexprtree == null) {
             return;
         }
@@ -273,7 +273,7 @@ public class BExpredMain extends JFrame {
             this.POSField.setText("Option unchecked");
     }
 
-    void updateTT(TruthTable aTT) {
+    private void updateTT(TruthTable aTT) {
         ArrayList vars = this.bexprtree.getVars();
         String[] colNames = new String[vars.size() + 1];
 
@@ -318,7 +318,7 @@ public class BExpredMain extends JFrame {
     void TTBtn_actionPerformed() {
         //Bah, just pops up what's going to be the truth table
         if (this.bexprtree != null) {
-            this.ttFrame.show();
+            this.ttFrame.setVisible(true);
         } else {
             // Should be a dialog
             System.out.println("There are no expressions to display in the truth table");
@@ -376,20 +376,20 @@ public class BExpredMain extends JFrame {
     void jCheckBoxMenuItem1_mouseReleased() {
         if (jCheckBoxMenuItem1.getState()) {
             if (this.bexprtree != null)
-                this.ttFrame.show();
+                this.ttFrame.setVisible(true);
             else
                 System.out.println("There are no expressions to display in the truth table");
         } else {
-            this.ttFrame.hide();
+            this.ttFrame.setVisible(false);
         }
     }
 
     void jCheckBoxMenuItem2_mouseReleased() {
         if (jCheckBoxMenuItem2.getState()) {
             this.cmpFrame.pack();
-            this.cmpFrame.show();
+            this.cmpFrame.setVisible(true);
         } else {
-            this.cmpFrame.hide();
+            this.cmpFrame.setVisible(false);
         }
     }
 
@@ -399,7 +399,7 @@ public class BExpredMain extends JFrame {
 }
 
 class BExpredMain_EvaluateBtn_actionAdapter implements java.awt.event.ActionListener {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_EvaluateBtn_actionAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -411,7 +411,7 @@ class BExpredMain_EvaluateBtn_actionAdapter implements java.awt.event.ActionList
 }
 
 class BExpredMain_ExprField_mouseAdapter extends java.awt.event.MouseAdapter {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_ExprField_mouseAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -423,7 +423,7 @@ class BExpredMain_ExprField_mouseAdapter extends java.awt.event.MouseAdapter {
 }
 
 class BExpredMain_TTBtn_actionAdapter implements java.awt.event.ActionListener {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_TTBtn_actionAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -435,7 +435,7 @@ class BExpredMain_TTBtn_actionAdapter implements java.awt.event.ActionListener {
 }
 
 class BExpredMain_ExprField_keyAdapter extends java.awt.event.KeyAdapter {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_ExprField_keyAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -447,7 +447,7 @@ class BExpredMain_ExprField_keyAdapter extends java.awt.event.KeyAdapter {
 }
 
 class BExpredMain_ExprField_focusAdapter extends java.awt.event.FocusAdapter {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_ExprField_focusAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -459,7 +459,7 @@ class BExpredMain_ExprField_focusAdapter extends java.awt.event.FocusAdapter {
 }
 
 class BExpredMain_ExprField_documentListener implements DocumentListener {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     public BExpredMain_ExprField_documentListener(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -478,7 +478,7 @@ class BExpredMain_ExprField_documentListener implements DocumentListener {
 }
 
 class BExpredMain_jMenuItem1_mouseAdapter extends java.awt.event.MouseAdapter {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_jMenuItem1_mouseAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -490,7 +490,7 @@ class BExpredMain_jMenuItem1_mouseAdapter extends java.awt.event.MouseAdapter {
 }
 
 class BExpredMain_jMenu2_mouseAdapter extends java.awt.event.MouseAdapter {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_jMenu2_mouseAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -502,7 +502,7 @@ class BExpredMain_jMenu2_mouseAdapter extends java.awt.event.MouseAdapter {
 }
 
 class BExpredMain_jCheckBoxMenuItem1_mouseAdapter extends java.awt.event.MouseAdapter {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_jCheckBoxMenuItem1_mouseAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -514,7 +514,7 @@ class BExpredMain_jCheckBoxMenuItem1_mouseAdapter extends java.awt.event.MouseAd
 }
 
 class BExpredMain_jCheckBoxMenuItem2_mouseAdapter extends java.awt.event.MouseAdapter {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_jCheckBoxMenuItem2_mouseAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;
@@ -526,7 +526,7 @@ class BExpredMain_jCheckBoxMenuItem2_mouseAdapter extends java.awt.event.MouseAd
 }
 
 class BExpredMain_ReduceBtn_actionAdapter implements java.awt.event.ActionListener {
-    BExpredMain adaptee;
+    private final BExpredMain adaptee;
 
     BExpredMain_ReduceBtn_actionAdapter(BExpredMain adaptee) {
         this.adaptee = adaptee;

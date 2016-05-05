@@ -30,14 +30,14 @@ import java.awt.event.KeyEvent;
 
  */
 
-public class BExprCompare extends JFrame {
-    JPanel jPanel1 = new JPanel();
-    JTextField jTextField1 = new JTextField();
-    JTextField jTextField2 = new JTextField();
-    JLabel jLabel1 = new JLabel();
-    JLabel jLabel2 = new JLabel();
-    JButton jButton1 = new JButton();
-    JTextField jTextField3 = new JTextField();
+class BExprCompare extends JFrame {
+    private final JPanel jPanel1 = new JPanel();
+    private final JTextField jTextField1 = new JTextField();
+    private final JTextField jTextField2 = new JTextField();
+    private final JLabel jLabel1 = new JLabel();
+    private final JLabel jLabel2 = new JLabel();
+    private final JButton jButton1 = new JButton();
+    private final JTextField jTextField3 = new JTextField();
 
     public BExprCompare() {
         try {
@@ -47,7 +47,7 @@ public class BExprCompare extends JFrame {
         }
     }
 
-    private void jbInit() throws Exception {
+    private void jbInit() {
         jTextField1.setText("");
         jTextField1.setBounds(new Rectangle(96, 8, 275, 19));
         jTextField1.addKeyListener(new BExprCompare_jTextField1_keyAdapter(this));
@@ -78,7 +78,7 @@ public class BExprCompare extends JFrame {
         this.getContentPane().add(jPanel1, null);
     }
 
-    void doCompare() {
+    private void doCompare() {
         try {
             BExprTree t1 = new BExprTree(this.jTextField1.getText());
             BExprTree t2 = new BExprTree(this.jTextField2.getText());
@@ -104,7 +104,7 @@ public class BExprCompare extends JFrame {
 }
 
 class BExprCompare_jButton1_actionAdapter implements java.awt.event.ActionListener {
-    BExprCompare adaptee;
+    private final BExprCompare adaptee;
 
     BExprCompare_jButton1_actionAdapter(BExprCompare adaptee) {
         this.adaptee = adaptee;
@@ -116,7 +116,7 @@ class BExprCompare_jButton1_actionAdapter implements java.awt.event.ActionListen
 }
 
 class BExprCompare_jTextField1_keyAdapter extends java.awt.event.KeyAdapter {
-    BExprCompare adaptee;
+    private final BExprCompare adaptee;
 
     BExprCompare_jTextField1_keyAdapter(BExprCompare adaptee) {
         this.adaptee = adaptee;
@@ -128,7 +128,7 @@ class BExprCompare_jTextField1_keyAdapter extends java.awt.event.KeyAdapter {
 }
 
 class BExprCompare_jTextField2_keyAdapter extends java.awt.event.KeyAdapter {
-    BExprCompare adaptee;
+    private final BExprCompare adaptee;
 
     BExprCompare_jTextField2_keyAdapter(BExprCompare adaptee) {
         this.adaptee = adaptee;
