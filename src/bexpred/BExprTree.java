@@ -1,4 +1,5 @@
 package bexpred;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -29,145 +30,133 @@ import java.util.Hashtable;
  */
 
 public class BExprTree {
-  private String expression; // The expression representing the expression tree
-  private int var_count; // The amount of unique variables
-  private ArrayList vars; // The list of variables, strings.
-  private boolean case_sensitive = false; // Is the expression case sensitive?
-  private BExprNode root; // The root node.
-  private TruthTable truth_table;
+    private String expression; // The expression representing the expression tree
+    private int var_count; // The amount of unique variables
+    private ArrayList vars; // The list of variables, strings.
+    private BExprNode root; // The root node.
+    private TruthTable truth_table;
 
-  public BExprTree() {
-    //This shouldn't be called, but we'll leave it in case it becomes handy
-    this.var_count = 0;
-  }
-
-  public BExprTree(String expression) throws BExprPreParseException {
-    this.setExpression(expression);
-  }
-
-  public BExprTree(String expression, boolean case_sensitive) throws BExprPreParseException {
-    this.case_sensitive = case_sensitive;
-    this.setExpression(expression);
-  }
-
-  public TruthTable getTruthTable() {
-    return this.truth_table;
-  }
-
-  public void setExpression(String expression) throws BExprPreParseException {
-    BExprPreParser preParser;
-    this.expression = expression.trim();
-
-    try {
-      preParser = new BExprPreParser(this.expression);
-      this.expression = preParser.getExpression();
-      this.var_count = this.updateVars();
-      this.root = new BExprNode(this.expression);
-      this.root.setInverted(preParser.isInverted() || this.root.isInverted());
-      this.truth_table = new TruthTable(this);
-    } catch (BExprPreParseException e) {
-      System.out.println(e);
-      this.vars = new ArrayList();
-      this.var_count = 0;
-      throw e;
-    }
-  }
-
-  public ArrayList getVars() {
-    // Basic accessor method
-    return this.vars;
-  }
-
-  public int getVarCount() {
-    return this.var_count;
-  }
-
-  private int updateVars() {
-    // This method simply sets the vars List and returns the amount of unique
-    // variables taking into account case if desired.
-    //
-    // These are almost all state variables
-    char aChar;
-    String aVar = "";
-    ArrayList boolVars = new ArrayList();
-    boolean inVar = false;
-    boolean isVar = true;
-    boolean varExists = false;
-    if (!this.case_sensitive) {
-      this.expression = this.expression.toUpperCase();
+    public BExprTree(String expression) throws BExprPreParseException {
+        this.setExpression(expression);
     }
 
-    this.expression += " "; // Pad the expression to catch the last "value"
-    for (int i = 0; i < this.expression.length(); i++) {
-      aChar = this.expression.charAt(i);
-      isVar = BExprParser.isVarChar(aChar);
-      if (!inVar && isVar) {
-        inVar = true;
-        aVar += aChar;
-      } else if (inVar) {
-        if (!isVar) {
-          inVar = false;
-          for (int s = 0; s < boolVars.size(); s++) {
-            if (aVar.compareTo((String) boolVars.get(s)) == 0)
-              varExists = true;
-          }
+    public TruthTable getTruthTable() {
+        return this.truth_table;
+    }
 
-          if (!varExists)
-            boolVars.add(aVar);
-          else
-            varExists = false;
+    public void setExpression(String expression) throws BExprPreParseException {
+        BExprPreParser preParser;
+        this.expression = expression.trim();
 
-          aVar = "";
-        } else {
-          aVar += aChar;
+        try {
+            preParser = new BExprPreParser(this.expression);
+            this.expression = preParser.getExpression();
+            this.var_count = this.updateVars();
+            this.root = new BExprNode(this.expression);
+            this.root.setInverted(preParser.isInverted() || this.root.isInverted());
+            this.truth_table = new TruthTable(this);
+        } catch (BExprPreParseException e) {
+            e.printStackTrace();
+            this.vars = new ArrayList();
+            this.var_count = 0;
+            throw e;
         }
-      }
     }
 
-    Object[] a;
-    a = boolVars.toArray();
-    Arrays.sort(a);
-    this.vars = new ArrayList(Arrays.asList(a));
-    return this.vars.size();
-  }
-
-  public boolean evaluate(Hashtable values) {
-    // This is the evaluate method that should be called (should work with calling it on root directly, but that may change)
-    return this.root.evaluate(values);
-  }
-
-  public boolean evaluate(boolean values[]) {
-    Hashtable h_values = new Hashtable(this.var_count);
-
-    for (int i = 0; i < this.var_count; i++) {
-      h_values.put((String) this.vars.get(i), values[i] ? "1" : "0");
+    public ArrayList getVars() {
+        // Basic accessor method
+        return this.vars;
     }
-    return this.evaluate(h_values);
-  }
 
-  public boolean compareTo(BExprTree aTree) {
-    // Returns true if the aTree expression is equivalent to this tree
-    // It just uses truth tables to determine this
-    if (this.getVarCount() == aTree.getVarCount())
-      return this.getVars().equals(aTree.getVars()) && this.getTruthTable().equals(aTree.getTruthTable());
+    public int getVarCount() {
+        return this.var_count;
+    }
 
-    this.getTruthTable().reduceVars();
-    aTree.getTruthTable().reduceVars();
+    private int updateVars() {
+        // This method simply sets the vars List and returns the amount of unique
+        // variables taking into account case if desired.
+        //
+        // These are almost all state variables
+        char aChar;
+        String aVar = "";
+        ArrayList boolVars = new ArrayList();
+        boolean inVar = false;
+        boolean isVar;
+        boolean varExists = false;
+        this.expression = this.expression.toUpperCase();
 
-    return this.getTruthTable().equals(aTree.getTruthTable());
-  }
+        this.expression += " "; // Pad the expression to catch the last "value"
+        for (int i = 0; i < this.expression.length(); i++) {
+            aChar = this.expression.charAt(i);
+            isVar = BExprParser.isVarChar(aChar);
+            if (!inVar && isVar) {
+                inVar = true;
+                aVar += aChar;
+            } else if (inVar) {
+                if (!isVar) {
+                    inVar = false;
+                    for (int s = 0; s < boolVars.size(); s++) {
+                        if (aVar.compareTo((String) boolVars.get(s)) == 0)
+                            varExists = true;
+                    }
 
-  /**
-   * Invert the current expression by converting ORs to ANDs, and ANDs to ORs,
-   * will fail if the tree contains operators other than ORs and ANDs. It also
-   * inverts and input variables.
-   * @throws Exception
-   */
-  public void invert() throws Exception {
-    this.root.invert();
-  }
+                    if (!varExists)
+                        boolVars.add(aVar);
+                    else
+                        varExists = false;
 
-  public String toString() {
-    return this.root.toString();
-  }
+                    aVar = "";
+                } else {
+                    aVar += aChar;
+                }
+            }
+        }
+
+        Object[] a;
+        a = boolVars.toArray();
+        Arrays.sort(a);
+        this.vars = new ArrayList(Arrays.asList(a));
+        return this.vars.size();
+    }
+
+    public boolean evaluate(Hashtable values) {
+        // This is the evaluate method that should be called (should work with calling it on root directly, but that may change)
+        return this.root.evaluate(values);
+    }
+
+    public boolean evaluate(boolean values[]) {
+        Hashtable h_values = new Hashtable(this.var_count);
+
+        for (int i = 0; i < this.var_count; i++) {
+            h_values.put((String) this.vars.get(i), values[i] ? "1" : "0");
+        }
+        return this.evaluate(h_values);
+    }
+
+    public boolean compareTo(BExprTree aTree) {
+        // Returns true if the aTree expression is equivalent to this tree
+        // It just uses truth tables to determine this
+        if (this.getVarCount() == aTree.getVarCount())
+            return this.getVars().equals(aTree.getVars()) && this.getTruthTable().equals(aTree.getTruthTable());
+
+        this.getTruthTable().reduceVars();
+        aTree.getTruthTable().reduceVars();
+
+        return this.getTruthTable().equals(aTree.getTruthTable());
+    }
+
+    /**
+     * Invert the current expression by converting ORs to ANDs, and ANDs to ORs,
+     * will fail if the tree contains operators other than ORs and ANDs. It also
+     * inverts and input variables.
+     *
+     * @throws Exception
+     */
+    public void invert() throws Exception {
+        this.root.invert();
+    }
+
+    public String toString() {
+        return this.root.toString();
+    }
 }

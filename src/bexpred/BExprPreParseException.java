@@ -27,23 +27,19 @@ package bexpred;
 
 
 public class BExprPreParseException extends Exception {
-  private String details;
+    private String details;
 
-  public BExprPreParseException() {
-    details = null;
-  }
+    public BExprPreParseException(String details) {
+        this.details = details;
+    }
 
-  public BExprPreParseException(String details) {
-    this.details = details;
-  }
+    public String toString() {
+        if (this.details != null)
+            return "Pre Parse Exception: " + this.details;
+        return "Pre Parse Exception";
+    }
 
-  public String toString() {
-    if (this.details != null)
-      return "Pre Parse Exception: " + this.details;
-    return "Pre Parse Exception";
-  }
-
-  public String getMessage() {
-    return this.toString();
-  }
+    public String getMessage() {
+        return this.toString();
+    }
 }

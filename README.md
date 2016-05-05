@@ -34,7 +34,7 @@ Compatible with Java, all the way back to 1.3.
 		A*B is NOT the same as AB
 
 	If no operator is found before an opening bracket or after a closing
-	one, an AND is asumed:
+	one, an AND is assumed:
 		(A+B)(C+A) is the same as (A+B)*(C+A)
 
 3) Reducing the expression:

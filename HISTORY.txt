@@ -7,7 +7,7 @@
 
 ** Version 1.0.0 - 2016/04/29
 - Clear "Enter an expression" when a character is entered
-- Show the current error in a single-line textbox on the bottom of the panel
+- Show the current error in a single-line TextBox on the bottom of the panel
 - Fixed a case where StackOverflowError would be thrown on a short string, such as: `(B)*((B)*(B))*((B)*(B))`
     This is because BExprParser.nextOp() wasn't considering bracket depth
 
@@ -37,10 +37,10 @@
 
 ** Version 0.4 - 2003/02/18
 - Support for NOTs, use ! or ~
-- Fixed various bugs relating to operator precedance and brackets
+- Fixed various bugs relating to operator precedence and brackets
 - Added primitive truth table (A better one will come)
-- Replaced input textfields with checkboxes
-- Added a scrollpane for the checkboxes
+- Replaced input TextFields with checkboxes
+- Added a ScrollPane for the checkboxes
 - Expression tree will auto-refresh when the expression changed and focus is
   lost in the expression input field
 - You can now press enter in the expression input field to refresh the tree

@@ -1,6 +1,8 @@
 package bexpred;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 
 /*
  * BExpred - Boolean Expression Reducer
@@ -27,122 +29,97 @@ import javax.swing.table.AbstractTableModel;
 
  */
 
-
-import javax.swing.*;
-import java.awt.*;
-
 public class TTFrame extends JFrame {
-  JScrollPane jScrollPane1 = new JScrollPane();
-  JTTable jTable1;
+    JScrollPane jScrollPane1 = new JScrollPane();
+    JTTable jTable1;
 
-  public TTFrame() {
-    try {
-      jbInit();
+    public TTFrame() {
+        try {
+            jbInit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    catch(Exception e) {
-      e.printStackTrace();
-    }
-  }
 
-  private void jbInit() throws Exception {
-    this.setSize(new Dimension(120, 120));
-    this.setTitle("Truth Table");
-    this.jScrollPane1.setMinimumSize(new Dimension(120, 120));
-    this.jScrollPane1.getViewport().add(this.jTable1);
-    this.getContentPane().add(jScrollPane1, BorderLayout.CENTER);
-  }
+    private void jbInit() throws Exception {
+        this.setSize(new Dimension(120, 120));
+        this.setTitle("Truth Table");
+        this.jScrollPane1.setMinimumSize(new Dimension(120, 120));
+        this.jScrollPane1.getViewport().add(this.jTable1);
+        this.getContentPane().add(jScrollPane1, BorderLayout.CENTER);
+    }
 }
 
 class JTTable extends JTable {
-  JTTable(Boolean[][] data, String[] colNames) {
-    super(new JTTModel(data, colNames));
-    this.getTableHeader().setReorderingAllowed(false);
-  }
+    JTTable(Boolean[][] data, String[] colNames) {
+        super(new JTTModel(data, colNames));
+        this.getTableHeader().setReorderingAllowed(false);
+    }
 }
 
 class JTTModel extends AbstractTableModel {
-  private Object[][] data;
-  private String[] colNames;
+    private Object[][] data;
+    private String[] colNames;
 
-  JTTModel() {
-    this.data = null;
-    this.colNames = null;
-  }
+    JTTModel(Boolean[][] data, String[] colNames) {
+        if (data.length == 0)
+            throw new IllegalArgumentException("Data must not be empty");
 
-  JTTModel(Boolean[][] data, String [] colNames) {
-    if (data.length == 0)
-      throw new IllegalArgumentException("Data must not be empty");
-
-    this.data = data;
-    this.colNames = colNames;
-  }
-
-  JTTModel(boolean[][] data, String [] colNames) {
-    if (data.length == 0)
-      throw new IllegalArgumentException("Data must not be empty");
-
-    this.data = new Object[data.length][data[0].length];
-
-    for (int i = 0; i < data.length; i++) {
-      for (int s = 0; s < data[i].length; s++) {
-        this.data[i][s] = new Boolean(data[i][s]);
-      }
+        this.data = data;
+        this.colNames = colNames;
     }
 
-    this.colNames = colNames;
-  }
+    public Class getColumnClass(int c) {
+        return getValueAt(0, c).getClass();
+    }
 
-  public Class getColumnClass(int c) {
-    return getValueAt(0, c).getClass();
-  }
+    public int getColumnCount() {
+        return colNames == null ? 0 : this.colNames.length;
+    }
 
-  public int getColumnCount() {
-    return colNames == null ? 0 : this.colNames.length;
-  }
+    public String getColumnName(int col) {
+        return this.colNames[col];
+    }
 
-  public String getColumnName(int col) {
-    return this.colNames[col];
-  }
+    public int getRowCount() {
+        return data == null ? 0 : this.data.length;
+    }
 
-  public int getRowCount() {
-    return data == null ? 0 : this.data.length;
-  }
+    public Object getValueAt(int row, int col) {
+        if (row < 0 || col < 0 || row >= this.getRowCount() || col >= this.getColumnCount())
+            throw new IllegalArgumentException("Invalid row or column index");
 
-  public Object getValueAt(int row, int col) {
-    if (row < 0 || col < 0 || row >= this.getRowCount() || col >= this.getColumnCount())
-      throw new IllegalArgumentException("Invalid row or column index");
+        return this.data[row][col];
+    }
 
-    return this.data[row][col];
-  }
+    public boolean isCellEditable(int row, int col) {
+        return false;
+    }
 
-  public boolean isCellEditable(int row, int col) {
-    return false;
-  }
+    public void setValueAt(boolean val, int row, int col) {
+        if (row < 0 || col < 0 || row >= this.getRowCount() || col >= this.getColumnCount())
+            throw new IllegalArgumentException("Invalid row or column index");
 
-  public void setValueAt(boolean val, int row, int col) {
-    if (row < 0 || col < 0 || row >= this.getRowCount() || col >= this.getColumnCount())
-      throw new IllegalArgumentException("Invalid row or column index");
+        this.data[row][col] = (val) ? Boolean.TRUE : Boolean.FALSE;
+    }
 
-    this.data[row][col] = new Boolean(val);
-  }
+    public void setValueAt(Object val, int row, int col) {
+        boolean boolVal;
+        if (val instanceof JCheckBox)
+            boolVal = ((JCheckBox) val).isSelected();
 
-  public void setValueAt(Object val, int row, int col) {
-    boolean boolVal;
-    if (val instanceof JCheckBox)
-      boolVal = ((JCheckBox) val).isSelected();
+        else if (val instanceof Boolean)
+            boolVal = ((Boolean) val).booleanValue();
 
-    else if (val instanceof Boolean)
-      boolVal = ((Boolean) val).booleanValue();
+        else if (val instanceof Integer)
+            boolVal = ((Integer) val).intValue() != 0;
 
-    else if (val instanceof Integer)
-      boolVal = ((Integer) val).intValue() == 0 ? false : true;
+        else if (val instanceof JRadioButton)
+            boolVal = ((JRadioButton) val).isSelected();
 
-    else if (val instanceof JRadioButton)
-      boolVal = ((JRadioButton) val).isSelected();
+        else
+            throw new IllegalArgumentException("val must be one of the following types: JCheckBox, Boolean, Integer, JRadioButton");
 
-    else
-      throw new IllegalArgumentException("val must be one of the following types: JCheckBox, Boolean, Integer, JRadioButton");
-
-    this.setValueAt(boolVal, row, col);
-  }
+        this.setValueAt(boolVal, row, col);
+    }
 }
