@@ -44,25 +44,25 @@ class QMReducer {
     public void setBoolTT(boolean[][] aTT) {
         QMItem anItem;
         boolean isConst = true;
-        int prevVal = -1;
+        int previousOutput = -1;
 
         for (int i = 0; i < aTT.length; i++) {
             if (aTT[i][this.groups.length - 1]) {
-                if (isConst && prevVal == 0)
+                if (isConst && previousOutput == 0) // Outputs have differed, can't be constant
                     isConst = false;
-                prevVal = 1;
+                previousOutput = 1;
                 anItem = new QMItem(aTT[i]);
                 this.groups[anItem.getOneCount()].add(anItem);
             } else {
-                if (isConst && prevVal == 1)
+                if (isConst && previousOutput == 1) // Outputs have differed, can't be constant
                     isConst = false;
-                prevVal = 0;
+                previousOutput = 0;
             }
         }
 
         if (isConst) {
             this.isConst = true;
-            this.constVal = (prevVal == 1);
+            this.constVal = (previousOutput == 1);
         }
     }
 
@@ -228,23 +228,23 @@ class QMItem {
     }
 
     public void reduceWith(QMItem anItem, QMGroup reducedGroup) {
-        int changed = -1;
+        int diffColumn = -1;
         for (int i = 0; i < this.row.length; i++) {
             if (this.row[i] < 0 && anItem.row[i] >= 0)
                 return;
 
             if (this.row[i] != anItem.row[i]) {
-                if (changed != -1)
+                if (diffColumn != -1) // There's more than one column different
                     return;
-                changed = i;
+                diffColumn = i;
             }
         }
 
-        if (changed == -1)
+        if (diffColumn == -1)
             return;
 
         QMItem changedItem = new QMItem(anItem);
-        changedItem.row[changed] = -1;
+        changedItem.row[diffColumn] = -1;
         reducedGroup.add(changedItem);
 
         this.copyCoveredRows(changedItem); // Copy the covered rows over to the new QMItem
