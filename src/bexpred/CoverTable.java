@@ -101,14 +101,6 @@ class CoverTable {
             }
         }
 
-        Boolean[][] dTable = new Boolean[this.table.length][this.table[0].length];
-
-        for (int i = 0; i < dTable.length; i++) {
-            for (int s = 0; s < dTable[i].length; s++) {
-                dTable[i][s] = this.table[i][s] ? Boolean.TRUE : Boolean.FALSE;
-            }
-        }
-
         return required;
     }
 
