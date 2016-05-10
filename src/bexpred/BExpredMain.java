@@ -330,8 +330,6 @@ class BExpredMain extends JFrame {
         if (e.getKeyCode() == 10) {
             this.refreshTree();
             this.goReduce();
-        } else if (!e.isAltDown() && !e.isControlDown()) {
-            this.needs_refresh = true;
         }
     }
 
@@ -341,10 +339,13 @@ class BExpredMain extends JFrame {
     }
 
     void ExprField_textChanged(DocumentEvent e) {
+        this.needs_refresh = true;
         if (this.showPlaceholder) {
             String notPlaceholder = "";
             try {
-                notPlaceholder = e.getDocument().getText(e.getOffset(), e.getLength());
+                if (e.getType() == DocumentEvent.EventType.INSERT) {
+                    notPlaceholder = e.getDocument().getText(e.getOffset(), e.getLength());
+                }
             } catch (BadLocationException ignored) {
             }
             final String replacement = notPlaceholder;
