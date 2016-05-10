@@ -1,3 +1,7 @@
+** Version 1.1.0 - 2016/05/10
+- Flag field as "needs refresh" after paste
+- A _lot_ of cleanup. There's a solid potential for regressions.
+
 ** Version 1.0.2 - 2016/05/01
 - Fixed another case where an unnecessary StackOverflow occurred
 
