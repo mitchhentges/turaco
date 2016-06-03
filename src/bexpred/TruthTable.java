@@ -42,7 +42,7 @@ public class TruthTable {
         int c;
         for (int i = 0; i < this.row_count; i++) {
             c = 0;
-            for (int s = varCount - 1; s >= 0; s--) {
+            for (int s = 0; s < varCount; s++) {
                 bArray[c++] = ((i >> s) & 1) == 1;
             }
             bArray[this.col_count - 1] = aTree.evaluate(bArray);
